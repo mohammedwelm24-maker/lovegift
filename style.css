@@ -1,0 +1,412 @@
+/* ========== المتغيرات ========== */
+:root {
+    --pink: #ff8fab;
+    --red: #e63e6d;
+    --purple: #7b2cbf;
+    --soft: #fff0f5;
+    --text: #4a1942;
+}
+
+/* ========== الأساسيات ========== */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    min-height: 100%;
+}
+
+body {
+    font-family: "Cairo", "Tajawal", "Segoe UI", Tahoma, Arial, sans-serif;
+    color: var(--text);
+    background: linear-gradient(135deg, #ffc2d4 0%, #ff7aa2 40%, #b565d9 100%);
+    background-attachment: fixed;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ========== القلوب واللمعان ========== */
+#hearts,
+#sparkles {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.heart {
+    position: absolute;
+    bottom: -40px;
+    opacity: 0;
+    animation: floatUp linear infinite;
+    will-change: transform, opacity;
+}
+
+@keyframes floatUp {
+    0% {
+    transform: translateY(0) translateX(0) rotate(0);
+    opacity: 0;
+    }
+    10% {
+    opacity: 0.8;
+    }
+    100% {
+    transform: translateY(-110vh) translateX(30px) rotate(25deg);
+    opacity: 0;
+    }
+}
+
+.sparkle {
+    position: absolute;
+    color: #fff;
+    text-shadow: 0 0 6px #fff;
+    animation: twinkle ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%,
+    100% {
+    opacity: 0;
+    transform: scale(0.4);
+    }
+    50% {
+    opacity: 1;
+    transform: scale(1);
+    }
+}
+
+/* ========== الشاشات ========== */
+.screen {
+    position: relative;
+    z-index: 1;
+    display: none;
+    min-height: 100vh;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 24px 16px 70px;
+    text-align: center;
+}
+
+.screen.active {
+    display: flex;
+    animation: fadeIn 0.8s ease both;
+}
+
+.screen.leaving {
+    animation: fadeOut 0.6s ease forwards;
+}
+
+@keyframes fadeIn {
+    from {
+    opacity: 0;
+    transform: translateY(12px);
+    }
+    to {
+    opacity: 1;
+    transform: none;
+    }
+}
+
+@keyframes fadeOut {
+    to {
+    opacity: 0;
+    transform: scale(0.96);
+    }
+}
+
+.title {
+    max-width: 520px;
+    color: #fff;
+    font-size: clamp(1.4rem, 5vw, 2.1rem);
+    line-height: 1.6;
+    text-shadow: 0 2px 10px rgba(90, 20, 80, 0.35);
+}
+
+/* ========== المظروف ========== */
+.env {
+    position: relative;
+    width: 200px;
+    height: 140px;
+    margin-top: 60px;
+    background: #ff6b92;
+    border-radius: 0 0 14px 14px;
+    box-shadow: 0 14px 30px rgba(90, 20, 80, 0.3);
+}
+
+.env .paper {
+    position: absolute;
+    top: 10px;
+    left: 12px;
+    right: 12px;
+    height: 110px;
+    z-index: 1;
+    background: #fff;
+    border-radius: 8px;
+    transition: transform 0.9s ease 0.6s;
+}
+
+.env .front {
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(160deg, #ff8fab, #ff5c8a);
+    border-radius: 0 0 14px 14px;
+    clip-path: polygon(0 0, 50% 58%, 100% 0, 100% 100%, 0 100%);
+}
+
+.env .flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    z-index: 3;
+    background: #e63e6d;
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top;
+    transition: transform 0.7s ease, z-index 0s 0.35s;
+}
+
+.env .seal {
+    position: absolute;
+    top: 56px;
+    left: 50%;
+    z-index: 4;
+    font-size: 1.8rem;
+        transform: translateX(-50%);
+    transition: opacity 0.3s;
+}
+
+.env.open .flap {
+    transform: rotateX(180deg);
+    z-index: 0;
+}
+
+.env.open .seal {
+    opacity: 0;
+}
+
+.env.open .paper {
+    transform: translateY(-70px);
+}
+
+.bob {
+    animation: bob 3s ease-in-out infinite;
+}
+
+@keyframes bob {
+        50% {
+    transform: translateY(-8px);
+        }
+}
+
+/* ========== النموذج والأزرار ========== */
+#lock-form {
+    display: flex;
+    flex-direction: column;
+        gap: 12px;
+    width: min(340px, 100%);
+}
+
+input {
+    font: inherit;
+    font-size: 1.1rem;
+    text-align: center;
+    padding: 14px 16px;
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.92);
+    border: 2px solid transparent;
+    border-radius: 999px;
+        outline: none;
+    box-shadow: 0 6px 18px rgba(90, 20, 80, 0.2);
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+input:focus {
+border-color: var(--red);
+transform: scale(1.02);
+}
+
+.btn {
+    font: inherit;
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #fff;
+    padding: 13px 26px;
+    cursor: pointer;
+    border: none;
+    border-radius: 999px;
+    background: linear-gradient(135deg, var(--red), var(--purple));
+    box-shadow: 0 8px 20px rgba(123, 44, 191, 0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.btn:hover {
+        transform: translateY(-3px) scale(1.03);
+    box-shadow: 0 12px 24px rgba(123, 44, 191, 0.45);
+}
+
+.btn:active {
+    transform: scale(0.97);
+}
+
+.btn.ghost {
+    color: var(--red);
+    background: rgba(255, 255, 255, 0.85);
+    box-shadow: 0 6px 16px rgba(90, 20, 80, 0.2);
+}
+
+/* ========== رسالة الخطأ ========== */
+.error {
+    min-height: 1.6em;
+    padding: 0 14px;
+    color: #fff;
+    font-weight: 600;
+    background: rgba(120, 20, 60, 0.35);
+    border-radius: 999px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.error.show {
+    padding: 6px 14px;
+    opacity: 1;
+}
+
+.shake {
+    animation: shake 0.45s;
+}
+
+@keyframes shake {
+    20%,
+    60% {
+    transform: translateX(-9px);
+    }
+    40%,
+    80% {
+    transform: translateX(9px);
+    }
+}
+
+/* ========== صفحة المفاجأة ========== */
+#env-stage {
+        height: 220px;
+        transition: opacity 0.6s, height 0.6s, margin 0.6s;
+}
+
+#env-stage.gone {
+    height: 0;
+    margin: 0;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.card {
+    display: none;
+    width: min(560px, 100%);
+    padding: 32px 24px;
+    background: rgba(255, 255, 255, 0.93);
+    border-radius: 28px;
+        box-shadow: 0 20px 50px rgba(90, 20, 80, 0.3);
+    backdrop-filter: blur(6px);
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+    transition: opacity 0.8s, transform 0.8s;
+}
+
+.card.show {
+    display: block;
+}
+
+.card.visible {
+    opacity: 1;
+    transform: none;
+}
+
+.message {
+    min-height: 7em;
+    direction: rtl;
+    font-size: clamp(1.25rem, 4.6vw, 1.8rem);
+    font-weight: 600;
+    line-height: 2.1;
+}
+
+.message.typing::after {
+    content: "|";
+    color: var(--red);
+    animation: blink 0.8s steps(1) infinite;
+}
+
+@keyframes blink {
+    50% {
+    opacity: 0;
+    }
+}
+
+.second {
+    min-height: 0;
+    margin-top: 8px;
+    color: var(--red);
+    font-size: clamp(1.1rem, 4vw, 1.5rem);
+    font-weight: 700;
+    line-height: 2;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.8s, transform 0.8s;
+}
+
+.second.show {
+    min-height: 2em;
+    opacity: 1;
+    transform: none;
+}
+
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 22px;
+}
+
+/* ========== الفوتر ========== */
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 2;
+    padding: 10px;
+    color: #fff;
+    font-size: 0.95rem;
+    text-align: center;
+    text-shadow: 0 1px 6px rgba(90, 20, 80, 0.4);
+}
+
+/* ========== الموبايل ========== */
+@media (max-width: 480px) {
+    .card {
+    padding: 24px 16px;
+    border-radius: 22px;
+    }
+
+    .btn {
+    width: 100%;
+    }
+}
+
+/* ========== تقليل الحركة ========== */
+@media (prefers-reduced-motion: reduce) {
+    .heart,
+    .sparkle,
+    .bob {
+    animation: none;
+    }
+}
